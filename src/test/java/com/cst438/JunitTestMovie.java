@@ -32,12 +32,12 @@ public class JunitTestMovie {
 
         MovieDTO[] result = fromJsonString(response.getContentAsString(), MovieDTO[].class);
 
-        assertEquals(result[0].movieTitle(), "Movie A");
+        assertEquals(result[0].movieTitle(), "Oppenheimer");
         assertEquals(result[0].movieRating(), "PG-13");
         assertEquals(result[0].movieLength(), 120);
         assertEquals(result[0].priceId(), 1);
 
-        assertEquals(result[11].movieTitle(), "Movie L");
+        assertEquals(result[11].movieTitle(), "Cars");
         assertEquals(result[11].movieRating(), "PG-13");
         assertEquals(result[11].movieLength(), 90);
         assertEquals(result[11].priceId(), 3);
@@ -55,7 +55,7 @@ public class JunitTestMovie {
         MovieDTO result = fromJsonString(response.getContentAsString(), MovieDTO.class);
 
         assertEquals(result.movieId(), 3, "correct");
-        assertEquals(result.movieTitle(), "Movie C", "correct");
+        assertEquals(result.movieTitle(), "Hidden Figures", "correct");
         assertEquals(result.movieRating(), "PG", "correct");
         assertEquals(result.movieLength(), 105, "correct");
         assertEquals(result.priceId(), 3, "correct");
@@ -65,7 +65,7 @@ public class JunitTestMovie {
     public void movieNotFoundTest() throws Exception {
         MockHttpServletResponse response;
 
-        response = mvc.perform(MockMvcRequestBuilders.get("/movie/14").accept(MediaType.APPLICATION_JSON))
+        response = mvc.perform(MockMvcRequestBuilders.get("/movie/15").accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
         assertEquals(400, response.getStatus());
@@ -73,7 +73,7 @@ public class JunitTestMovie {
 
     @Test
     public void addMovieTest() throws Exception {
-        MovieDTO adto = new MovieDTO(13, "Iron Man", "PG", 140, 1);
+        MovieDTO adto = new MovieDTO(14, "Iron Man", "PG", 140, 1);
         MockHttpServletResponse response;
         response = mvc.perform(
                         MockMvcRequestBuilders
@@ -86,7 +86,7 @@ public class JunitTestMovie {
 
         response = mvc.perform(
                         MockMvcRequestBuilders
-                                .get("/movie/13")
+                                .get("/movie/14")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
         assertEquals(200, response.getStatus());
@@ -109,7 +109,7 @@ public class JunitTestMovie {
         MovieDTO result = fromJsonString(response.getContentAsString(), MovieDTO.class);
 
         assertEquals(result.movieId(), 12, "correct");
-        assertEquals(result.movieTitle(), "Movie L", "correct");
+        assertEquals(result.movieTitle(), "Cars", "correct");
         assertEquals(result.movieRating(), "PG-13", "correct");
         assertEquals(result.movieLength(), 90, "correct");
 

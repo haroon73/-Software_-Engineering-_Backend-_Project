@@ -31,13 +31,13 @@ public class JunitTestSchedule {
 
         ScheduleDTO[] result = fromJsonString(response.getContentAsString(), ScheduleDTO[].class);
 
-        assertEquals(result[0].movieTitle(), "Movie A");
+        assertEquals(result[0].movieTitle(), "Oppenheimer");
         assertEquals(result[0].date(), "2023-11-15");
         assertEquals(result[0].start_time(), "12:00 PM");
         assertEquals(result[0].end_time(), "2:00 PM");
         assertEquals(result[0].roomCapacity(), 50);
 
-        assertEquals(result[12].movieTitle(), "Movie C");
+        assertEquals(result[12].movieTitle(), "Hidden Figures");
         assertEquals(result[12].date(), "2023-11-17");
         assertEquals(result[12].start_time(), "3:30 PM");
         assertEquals(result[12].end_time(), "6:00 PM");
@@ -56,7 +56,7 @@ public class JunitTestSchedule {
         ScheduleDTO result = fromJsonString(response.getContentAsString(), ScheduleDTO.class);
 
         assertEquals(result.scheduleId(), 3, "correct");
-        assertEquals(result.movieTitle(), "Movie C", "correct");
+        assertEquals(result.movieTitle(), "Hidden Figures", "correct");
         assertEquals(result.start_time(), "7:00 PM", "correct");
         assertEquals(result.end_time(), "9:00 PM", "correct");
         assertEquals(result.date(), "2023-11-15", "correct");
@@ -74,12 +74,12 @@ public class JunitTestSchedule {
         ScheduleDTO result = fromJsonString(response.getContentAsString(), ScheduleDTO.class);
 
         assertEquals(result.scheduleId(), 2, "correct");
-        assertEquals(result.movieTitle(), "Movie B", "correct");
+        assertEquals(result.movieTitle(), "Barbie", "correct");
         assertEquals(result.start_time(), "3:00 PM", "correct");
         assertEquals(result.end_time(), "5:30 PM", "correct");
         assertEquals(result.date(), "2023-11-15", "correct");
 
-        ScheduleDTO adto2 = new ScheduleDTO(2, "4:00 PM", "5:00 PM", "2023-11-17", 1,  null, 1, null);
+        ScheduleDTO adto2 = new ScheduleDTO(2, "4:00 PM", "5:00 PM", "2023-11-17", 12,  "Cars", 1, null);
         response = mvc.perform(
                         MockMvcRequestBuilders
                                 .put("/schedule/2")
@@ -105,7 +105,7 @@ public class JunitTestSchedule {
 
     @Test
     public void createScheduleTest() throws Exception {
-        ScheduleDTO adto = new ScheduleDTO(14, "2:00 PM", "4:00 PM", "2023-11-17", 1,  null, 1, null);
+        ScheduleDTO adto = new ScheduleDTO(14, "2:00 PM", "4:00 PM", "2023-11-17", 12,  "Cars", 1, null);
         MockHttpServletResponse response;
         response = mvc.perform(
                         MockMvcRequestBuilders
@@ -126,6 +126,7 @@ public class JunitTestSchedule {
         assertEquals(adto.start_time(), adtor.start_time());
         assertEquals(adto.end_time(), adtor.end_time());
         assertEquals(adto.date(), adtor.date());
+        assertEquals(adto.movieTitle(), adtor.movieTitle());
         assertEquals(adto.movieId(), adtor.movieId());
         assertEquals(adto.roomId(), adtor.roomId());
     }
@@ -142,7 +143,7 @@ public class JunitTestSchedule {
         ScheduleDTO result = fromJsonString(response.getContentAsString(), ScheduleDTO.class);
 
         assertEquals(result.scheduleId(), 13, "correct");
-        assertEquals(result.movieTitle(), "Movie C", "correct");
+        assertEquals(result.movieTitle(), "Hidden Figures", "correct");
         assertEquals(result.start_time(), "3:30 PM", "correct");
         assertEquals(result.end_time(), "6:00 PM", "correct");
         assertEquals(result.date(), "2023-11-17", "correct");
